@@ -4,11 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.DirectoryIteratorException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.File;
 
 public class Cli {
 
@@ -39,12 +35,20 @@ public class Cli {
 					output = System.getProperty("user.home"); // print home
 				} else if (command.equals("os")) {
 					output = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")"; // print OS
-				} else if (command.equals("printenv")) {
-					Map<String, String> env = System.getenv();
-        				
-					for (String envName : env.keySet()) {
-            					System.out.format("%s%n", env.get(envName));
-        				}
+				} else if (parts[0].equals("printenv")) {
+					if (nbrElems < 2) {
+        					Map<String, String> variables = System.getenv();
+        					for (String key : variables.keySet()) {
+            						System.out.println( key + " = " + variables.get( key ) );
+      						}
+					} else {
+						String homeValue = System.getenv(parts[1]);
+						if (homeValue == null) {
+							output = "";
+						} else {
+							output = homeValue;
+						}
+					}
         			} else if (parts[0].equals("echo") || parts[0].equals("print")) {
 					if (nbrElems < 2) {
 						output = "";
@@ -55,6 +59,21 @@ public class Cli {
 							result = result + parts[i] + " ";
 						}
 						output = result;
+					}
+				} else if (parts[0].equals("ls")) {
+					if (nbrElems < 2) {
+						output = "";
+					} else {
+						String filePath = parts[1];
+        					File file = new File(filePath);
+
+						if (!file.exists()) {
+						/*si le chemin est erroné alors*/
+							output = "";
+						} else {
+						/*si le chemin existe*/
+							output = "ok";
+						}
 					}
 				} else {
 					output = "Command '" + command + "' not found.";
