@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.Map;
-//import java.io;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +41,7 @@ public class Cli {
 					if (nbrElems < 2) {
         					Map<String, String> variables = System.getenv();
         					for (String key : variables.keySet()) {
-            						System.out.println( key + " = " + variables.get( key ) );
+            						System.out.println( key + "=" + variables.get( key ) );
       						}
 					} else {
 						String homeValue = System.getenv(parts[1]);
@@ -65,14 +64,9 @@ public class Cli {
 					}
 				} else if (parts[0].equals("ls")) {
 					if (nbrElems < 2) {
-						output = "";
+						output = "Not a directory";
 					} else {
 						String filePath = parts[1];
-
-						if (parts[1].endsWith(":")) {
-							filePath = parts[1] + "\\";
-							System.out.println("filePath");
-						}
 						
         					File path = new File(filePath);
 						File[] liste = path.listFiles();
@@ -93,7 +87,7 @@ public class Cli {
 						}
 					}
 				} else {
-					output = "Command '" + command + "' not found.";
+					output = "Command '" + parts[0] + "' not found.";
 				}
 			}
 			System.out.println(output); // Print with new line (ln)
