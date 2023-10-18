@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Cli {
 
@@ -40,7 +45,6 @@ public class Cli {
 					for (String envName : env.keySet()) {
             					System.out.format("%s%n", env.get(envName));
         				}
-
         			} else if (parts[0].equals("echo") || parts[0].equals("print")) {
 					if (nbrElems < 2) {
 						output = "";
