@@ -39,10 +39,12 @@ public class Cli {
 					output = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")"; // print OS
 				} else if (parts[0].equals("printenv")) {
 					if (nbrElems < 2) {
+						String result = "";
         					Map<String, String> variables = System.getenv();
         					for (String key : variables.keySet()) {
-            						System.out.println( key + "=" + variables.get( key ) );
+            						result = result + String.format(key + "=" + variables.get(key) + "%n");
       						}
+						output = result;
 					} else {
 						String homeValue = System.getenv(parts[1]);
 						if (homeValue == null) {
@@ -77,13 +79,16 @@ public class Cli {
 						} else {
 						/*si le chemin existe*/
 							
+							String result = "";
       							for(File item : liste) {
-        							if(item.isFile()) { 
-          								System.out.format("%s%n", item.getName()); 
+        							if(item.isFile()) {
+									result = result + String.format("%s%n", item.getName());
         							} else if(item.isDirectory()) {
-          								System.out.format("%s%n", item.getName()); 
+									result = result + String.format("%s%n", item.getName());
         							} 
       							}
+							
+							output = result;
 						}
 					}
 				} else {
