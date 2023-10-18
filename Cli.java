@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.Map;
+//import java.io;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class Cli {
 
@@ -65,14 +68,28 @@ public class Cli {
 						output = "";
 					} else {
 						String filePath = parts[1];
-        					File file = new File(filePath);
 
-						if (!file.exists()) {
+						if (parts[1].endsWith(":")) {
+							filePath = parts[1] + "\\";
+							System.out.println("filePath");
+						}
+						
+        					File path = new File(filePath);
+						File[] liste = path.listFiles();
+
+						if (!path.exists()) {
 						/*si le chemin est erroné alors*/
-							output = "";
+							output = "Not a directory";
 						} else {
 						/*si le chemin existe*/
-							output = "ok";
+							
+      							for(File item : liste) {
+        							if(item.isFile()) { 
+          								System.out.format("%s%n", item.getName()); 
+        							} else if(item.isDirectory()) {
+          								System.out.format("%s%n", item.getName()); 
+        							} 
+      							}
 						}
 					}
 				} else {
