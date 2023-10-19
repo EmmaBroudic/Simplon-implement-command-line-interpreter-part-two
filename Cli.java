@@ -73,9 +73,11 @@ public class Cli {
 							File[] liste = path.listFiles();
 
       							for(File item : liste) {
-        							if(item.isFile() || item.isDirectory()) {
-									output.append(String.format("%s%n", item.getName()));	
-        							}
+        							if(item.isFile()) {
+									output.append(String.format("%s%n", item.getName()));
+        							} else if(item.isDirectory()) {
+									output.append(String.format("%s%n", item.getName()));
+        							} 
       							}
 						}
 					}
