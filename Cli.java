@@ -39,12 +39,13 @@ public class Cli {
 					output = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")"; // print OS
 				} else if (parts[0].equals("printenv")) {
 					if (nbrElems < 2) {
-						String result = "";
+						StringBuilder result = new StringBuilder();
+
         					Map<String, String> variables = System.getenv();
         					for (String key : variables.keySet()) {
-            						result = result.concat(String.format(key + "=" + variables.get(key) + "%n"));
+            						result.append(String.format(key + "=" + variables.get(key) + "%n"));
       						}
-						output = result;
+						output = "" + result;
 					} else {
 						String homeValue = System.getenv(parts[1]);
 						if (homeValue == null) {
@@ -57,12 +58,13 @@ public class Cli {
 					if (nbrElems < 2) {
 						output = "";
 					} else {						
-						String result = "";
+						StringBuilder result = new StringBuilder();
 
 						for (int i = 1; i < nbrElems; i++) {
-							result = result.concat(parts[i] + " ");
+							result.append(parts[i]).append(" ");
 						}
-						output = result;
+
+						output = "" + result;
 					}
 				} else if (parts[0].equals("ls")) {
 					if (nbrElems < 2) {
@@ -74,21 +76,17 @@ public class Cli {
 						File[] liste = path.listFiles();
 
 						if (!path.exists()) {
-						/*si le chemin est erroné alors*/
 							output = "Not a directory";
 						} else {
-						/*si le chemin existe*/
-							
-							String result = "";
+							StringBuilder result = new StringBuilder();
+
       							for(File item : liste) {
-        							if(item.isFile()) {
-									result = result.concat(String.format("%s%n", item.getName()));
-        							} else if(item.isDirectory()) {
-									result = result.concat(String.format("%s%n", item.getName()));
-        							} 
+        							if(item.isFile() || item.isDirectory()) {
+									result.append(String.format("%s%n", item.getName()));	
+        							}
+							output = "" + result;
+
       							}
-							
-							output = result;
 						}
 					}
 				} else {
