@@ -17,7 +17,7 @@ public class Cli {
 
 		while (true) { // Infinite loop
 			String command = scanner.nextLine(); // Get input from console as a string
-			String output = ""; // A variable named output of type String
+			StringBuilder output = new StringBuilder();
 			String[] parts = command.split(" ");
 			int nbrElems = parts.length;
 
@@ -26,70 +26,61 @@ public class Cli {
 			} else {
 
 				if (command.equals("date")) {
-					output = "" + LocalDate.now(); // print date
+					output.append(LocalDate.now()); // print date
 				} else if (command.equals("time")) {
-					output = "" + LocalTime.now(); // print date
+					output.append(LocalTime.now()); // print date
 				} else if (command.equals("datetime")) {
-					output = "" + LocalDateTime.now(); // print date and time
+					output.append(LocalDateTime.now()); // print date and time
 				} else if (command.equals("useraccount")) {
-					output = System.getProperty("user.name"); // print name
+					output.append(System.getProperty("user.name")); // print name
 				} else if (command.equals("userhome")) {
-					output = System.getProperty("user.home"); // print home
+					output.append(System.getProperty("user.home")); // print home
 				} else if (command.equals("os")) {
-					output = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")"; // print OS
+					output.append(System.getProperty("os.name")).append(" (").append(System.getProperty("os.version")).append(")"); // print OS
 				} else if (parts[0].equals("printenv")) {
 					if (nbrElems < 2) {
-						StringBuilder result = new StringBuilder();
-
         					Map<String, String> variables = System.getenv();
         					for (String key : variables.keySet()) {
-            						result.append(String.format(key + "=" + variables.get(key) + "%n"));
+            						output.append(key).append("=").append(variables.get(key)).append(System.lineSeparator());
       						}
-						output = String.join("", result);
 					} else {
 						String homeValue = System.getenv(parts[1]);
 						if (homeValue == null) {
-							output = "";
+							output.append("");
 						} else {
-							output = homeValue;
+							output.append(homeValue);
 						}
 					}
         			} else if (parts[0].equals("echo") || parts[0].equals("print")) {
 					if (nbrElems < 2) {
-						output = "";
+						output.append("");
 					} else {						
-						StringBuilder result = new StringBuilder();
-
 						for (int i = 1; i < nbrElems; i++) {
-							result.append(parts[i]).append(" ");
+							output.append(parts[i]).append(" ");
 						}
-
-						output = String.join("", result);
 					}
 				} else if (parts[0].equals("ls")) {
 					if (nbrElems < 2) {
-						output = "Not a directory";
+						output.append("Not a directory");
 					} else {
 						String filePath = parts[1];
 						
         					File path = new File(filePath);
 
 						if (!path.exists()) {
-							output = "Not a directory";
+							output.append("Not a directory");
 						} else {
 							File[] liste = path.listFiles();
-							StringBuilder result = new StringBuilder();
 
       							for(File item : liste) {
         							if(item.isFile() || item.isDirectory()) {
-									result.append(String.format("%s%n", item.getName()));	
+									output.append(String.format("%s%n", item.getName()));	
         							}
       							}
-							output = String.join("", result);
 						}
 					}
 				} else {
-					output = "Command '" + parts[0] + "' not found.";
+					output.append("Command '").append(parts[0]).append("' not found.");
 				}
 			}
 			System.out.println(output); // Print with new line (ln)
