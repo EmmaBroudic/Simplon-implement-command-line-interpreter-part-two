@@ -69,7 +69,7 @@ public class Cli {
 
 						if (!path.exists()) {
 							output.append("Not a directory");
-						} else {
+						} else if (path.isDirectory()) {
 							File[] liste = path.listFiles();
 
       							for(File item : liste) {
@@ -77,7 +77,7 @@ public class Cli {
 									output.append(String.format("%s%n", item.getName()));
         							} else if(item.isDirectory()) {
 									output.append(String.format("%s%n", item.getName()));
-        							} 
+        							}
       							}
 						}
 					}
