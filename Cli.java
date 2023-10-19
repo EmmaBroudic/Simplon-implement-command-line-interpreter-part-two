@@ -45,7 +45,7 @@ public class Cli {
         					for (String key : variables.keySet()) {
             						result.append(String.format(key + "=" + variables.get(key) + "%n"));
       						}
-						output = "" + result;
+						output = String.join("", result);
 					} else {
 						String homeValue = System.getenv(parts[1]);
 						if (homeValue == null) {
@@ -64,7 +64,7 @@ public class Cli {
 							result.append(parts[i]).append(" ");
 						}
 
-						output = "" + result;
+						output = String.join("", result);
 					}
 				} else if (parts[0].equals("ls")) {
 					if (nbrElems < 2) {
@@ -73,20 +73,19 @@ public class Cli {
 						String filePath = parts[1];
 						
         					File path = new File(filePath);
-						File[] liste = path.listFiles();
 
 						if (!path.exists()) {
 							output = "Not a directory";
 						} else {
+							File[] liste = path.listFiles();
 							StringBuilder result = new StringBuilder();
 
       							for(File item : liste) {
         							if(item.isFile() || item.isDirectory()) {
 									result.append(String.format("%s%n", item.getName()));	
         							}
-							output = "" + result;
-
       							}
+							output = String.join("", result);
 						}
 					}
 				} else {
