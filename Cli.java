@@ -42,7 +42,7 @@ public class Cli {
 						String result = "";
         					Map<String, String> variables = System.getenv();
         					for (String key : variables.keySet()) {
-            						result = result + String.format(key + "=" + variables.get(key) + "%n");
+            						result = result.concat(String.format(key + "=" + variables.get(key) + "%n"));
       						}
 						output = result;
 					} else {
@@ -60,7 +60,7 @@ public class Cli {
 						String result = "";
 
 						for (int i = 1; i < nbrElems; i++) {
-							result = result + parts[i] + " ";
+							result = result.concat(parts[i] + " ");
 						}
 						output = result;
 					}
@@ -82,9 +82,9 @@ public class Cli {
 							String result = "";
       							for(File item : liste) {
         							if(item.isFile()) {
-									result = result + String.format("%s%n", item.getName());
+									result = result.concat(String.format("%s%n", item.getName()));
         							} else if(item.isDirectory()) {
-									result = result + String.format("%s%n", item.getName());
+									result = result.concat(String.format("%s%n", item.getName()));
         							} 
       							}
 							
