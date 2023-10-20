@@ -79,6 +79,8 @@ public class Cli {
 									output.append(String.format("%s%n", item.getName()));
         							}
       							}
+						} else {
+							output.append("Not a directory");
 						}
 					}
 				} else {
